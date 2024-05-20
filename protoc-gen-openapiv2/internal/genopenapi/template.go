@@ -702,13 +702,13 @@ func renderMessagesAsDefinition(messages messageMap, d openapiDefinitionsObject,
 // Elements without `google.api.VisibilityRule` annotations entirely are always visible.
 func isVisible(r *visibility.VisibilityRule, reg *descriptor.Registry) bool {
 	if r == nil {
-		return true
+		return reg.GetIncludeWithoutVisibility()
 	}
 
 	restrictions := strings.Split(strings.TrimSpace(r.Restriction), ",")
 	// No restrictions results in the element always being visible
 	if len(restrictions) == 0 {
-		return true
+		return reg.GetIncludeWithoutVisibility()
 	}
 
 	for _, restriction := range restrictions {
